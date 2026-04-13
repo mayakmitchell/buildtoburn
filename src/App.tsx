@@ -3,13 +3,17 @@ import { useState, useEffect } from 'react';
 function App() {
   const [activeApproach, setActiveApproach] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
 
-  const heroImage = '/assets/hero_woman_lifting_1773959351631.png';
-  const bioImage = '/assets/coach_marie_1773961244477.png';
-  const helpImage = '/assets/trainer_coaching_1773959380358.png';
-  const journeyImage = '/assets/barbell_grip_1773959365867.png';
+  const bioImage = '/assets/coach_marie_final.jpg';
+  const journeyImage = '/assets/journey_image.jpg';
+  
+  const hero_1 = '/assets/media__1776044929061.jpg';
+  const hero_2 = '/assets/media__1776044929075.jpg';
+  const hero_3 = '/assets/media__1776044929628.jpg';
+  const hero_4 = '/assets/media__1776044929674.jpg';
 
-  const carouselImages = [heroImage, helpImage, journeyImage];
+  const carouselImages = [hero_1, hero_2, hero_3, hero_4];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,7 +23,7 @@ function App() {
   }, [carouselImages.length]);
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + + 1) % carouselImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
   };
 
   const prevImage = () => {
@@ -44,6 +48,60 @@ function App() {
       content: 'Gain confidence through consistency. Build resilience, body recomposition, and mental strength.'
     }
   ];
+
+  const testimonials = [
+    {
+      name: 'Katherine R.',
+      text: "Marie is the best! She is knowledgeable, caring and thoughtful. Every session is unique and catered towards my needs and wishes as a client. I have seen incredible progress with my lifting technique and overall strength in my time working with her. Marie emphasizes form and technique in everything we do to ensure we can lift and go through life injury free. Her uplifting and bubbly personality make her a joy to work. I always leave my workouts with her feeling motivated, empowered and stronger. I would recommend Marie to anyone from former athletes to people just starting their fitness journey. Marie will get you where you want to be!"
+    },
+    {
+      name: 'Diane W.',
+      text: "I can give three reasons to have Marie for your fitness trainer: expertise, affordability, and motivation. Following some months of physical therapy for back problems, Marie has been a necessary luxury for me. She is so precise in her knowledge of what exercises will help you build muscle where you need it. She uses her expertise to design a program just for you. I never thought I would be in position to be able to have a personal fitness trainer, but Marie made it affordable. Ask her to try to pair you up with one or two other clients, for semi-personal sessions that work for you. Marie also makes it fun- she's joyful and optimistic, at the same time as being firmly motivating. She is clearly qualified to train people who are more serious about sports or body building than I am, but she is also perfect for fitness at any age, or to maintain progress after physical therapy."
+    },
+    {
+      name: 'Kim F.',
+      text: "Absolutely love working with Marie. She is definitely a top notch trainer with tremendous knowledge in weightlifting and body building. I love how she ensures that every exercise is done correctly with proper form so you don't get injured. Marie is always mixing up the workouts so you never get bored. She also takes any issues you may have into consideration and designs your workouts to obtain the most effective and best results. She truly cares about her clients and their well being. I feel I have accomplished something really beneficial for my body after a session with Marie. Oh, and did I mention how nice, fun and positive she is? Marie is the best!"
+    },
+    {
+      name: 'Kevin G.',
+      text: "I am incredibly grateful for the work that Marie is doing to help my patients reach their ultimate potential. As a Physical Therapist, it has been a huge asset to have a someone you trust and know can get your patients to the next level in a safe and effective manner. Her dedication, expertise, and genuine passion for helping our clients achieve their fitness goals are truly remarkable. She creates customized workout programs tailored to each individual, pushing them beyond their limits while prioritizing their safety. With a personal approach, she actively listens, offers tailored guidance, and builds genuine relationships. Our clients have experienced remarkable progress under her guidance. If you're seeking an exceptional trainer who delivers results, look no further. She is simply outstanding!"
+    },
+    {
+      name: 'Alana K.',
+      text: "I absolutely LOVE my training sessions with Marie. She focus so much on my form so I know that, even though I’m working hard, I won’t get injured. Her workouts are thoughtfully planned out and I’m always sore after! I worked with Marie before and throughout my pregnancy and when I had my C-section, the doctor said as she was sewing me up \"great ab muscles!\" Three years later, I was able to carry my 35 pound daughter around Disneyland for 2 days. Marie's approach makes your whole body strong and she is a JOY to work with. Every week I'm excited and scared to see what she comes up with!"
+    },
+    {
+      name: 'Sophie I.',
+      text: "Marie is a fantastic personal trainer! Over the last year she has taught me how to properly lift weights (without pain or hurting yourself) and helped me reach fitness goals I didn't think I could! My confidence as woman in the gym and lifting weights has grown exponentially, thanks to Marie! Highly recommend!!"
+    },
+    {
+      name: 'Matthew P.',
+      text: "I wanted to take a moment to share my thoughts on the exceptional service that Marie provides as a personal trainer and lifestyle coach. I must say, I am thoroughly impressed. Her attention to detail and ability to create personalized workout plans tailored to each client's needs is truly remarkable. I appreciate the time that she takes to understand each client's goals and limitations, ensuring that every exercise is safe and effective. Her knowledge of anatomy and biomechanics is evident in how she instructs her clients on proper form, which is crucial for injury prevention. Additionally, her positive attitude and enthusiasm is infectious, making clients feel motivated and supported throughout their fitness journey. It's clear that she has a genuine passion for helping others achieve their goals and improve their overall health and well-being. I highly recommend Build to Burn to anyone looking for a skilled and caring personal trainer. Keep up the great work!"
+    },
+    {
+      name: 'Teresa O.',
+      text: "Build to Burn is excellent training for beginners to advanced lifters. Marie has taught me correct lifting techniques so that I was confident in my form when using heavier weights. She also took time to create specific programs for me while rehabilitating a wrist injury. Based on the strength I have gained, I have enough energy and strength to run, lift, and play with my grandkids all day without tiring."
+    },
+    {
+      name: 'John J.',
+      text: "Marie is an incredibly knowledgeable and patient trainer. It is obvious that she is very passionate about educating her clients on not only how to train, but why what you are doing is important. If you are looking for an amazing trainer than truly cares about your progress, then give her a call!"
+    },
+    {
+      name: 'Michele F.',
+      text: "I did my first Build to Burn Bootcamp in 2017. Marie taught me how to lift safely with good technique. I was hooked and have even competed in powerlifting competitions. The best benefit of lifting is it transformed my body. I started when I was 55; so it's never too late to start. I highly recommend this program!"
+    }
+  ];
+
+  const totalPages = Math.ceil(testimonials.length / 2);
+  const currentPage = Math.floor(currentTestimonialIndex / 2) + 1;
+
+  const nextTestimonial = () => {
+    setCurrentTestimonialIndex((prev) => Math.min(prev + 2, (totalPages - 1) * 2));
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonialIndex((prev) => Math.max(0, prev - 2));
+  };
 
   return (
     <>
@@ -145,7 +203,7 @@ function App() {
           </div>
         </div>
         <div className="help-right">
-          <img src={helpImage} alt="Trainer Coaching" />
+          <img src={journeyImage} alt="Your Journey with Us" />
         </div>
       </section>
 
@@ -200,20 +258,52 @@ function App() {
           </div>
         </div>
 
-        <div style={{ borderTop: '1px solid #eaeaea', paddingTop: '3rem', display: 'flex', gap: '4rem', flexWrap: 'wrap' }}>
-          <div style={{ flex: '1', minWidth: '300px' }}>
-            <div style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Samantha R.</div>
-            <div style={{ color: '#f5b041' }}>★★★★★</div>
-            <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#111' }}>
-              "I am probably the fittest and strongest I've ever been! Build to Burn truly focuses on progressive, careful coaching. I feel incredible."
-            </p>
-          </div>
-          <div style={{ flex: '1', minWidth: '300px' }}>
-            <div style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Jessica M.</div>
-            <div style={{ color: '#f5b041' }}>★★★★★</div>
-            <p style={{ marginTop: '1rem', fontStyle: 'italic', color: '#111' }}>
-              "Marie designed a program that fit right into my busy career life. There's no place quite like Build to Burn for feeling supported."
-            </p>
+        <div style={{ paddingTop: '3rem', width: '100%' }}>
+          <div style={{ position: 'relative', width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {[0, 1].map((offset) => {
+                const index = (currentTestimonialIndex + offset) % testimonials.length;
+                const review = testimonials[index];
+                return (
+                  <div key={`${currentTestimonialIndex}-${offset}`} className="review-animate" style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', width: '100%', padding: '3rem 0', borderTop: '1px solid #eaeaea' }}>
+                    <div style={{ flex: '0 0 250px' }}>
+                      <div style={{ fontWeight: '700', marginBottom: '0.5rem', fontSize: '1.2rem', color: '#111' }}>{review.name}</div>
+                      <div style={{ color: '#f5b041', fontSize: '1.1rem' }}>★★★★★ <span style={{ color: '#888', fontSize: '0.85rem', marginLeft: '0.5rem' }}>5/5</span></div>
+                    </div>
+                    <div style={{ flex: '1', minWidth: '300px' }}>
+                      <p style={{ margin: '0', color: '#555', lineHeight: '1.8', fontSize: '1.05rem' }}>
+                        {review.text}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', borderTop: '1px solid #eaeaea', paddingTop: '2.5rem' }}>
+              <button 
+                onClick={prevTestimonial} 
+                style={{ background: 'transparent', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.8rem', opacity: currentPage > 1 ? 1 : 0, pointerEvents: currentPage > 1 ? 'auto' : 'none', padding: '0 0.5rem', transition: 'color 0.2s' }} 
+                aria-label="Previous reviews"
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = '#000')}
+              >
+                ←
+              </button>
+              
+              <div style={{ fontSize: '1rem', fontWeight: '500', color: '#111', minWidth: '40px', textAlign: 'center' }}>
+                {currentPage} / {totalPages}
+              </div>
+              
+              <button 
+                onClick={nextTestimonial} 
+                style={{ background: 'transparent', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.8rem', opacity: currentPage < totalPages ? 1 : 0, pointerEvents: currentPage < totalPages ? 'auto' : 'none', padding: '0 0.5rem', transition: 'color 0.2s' }} 
+                aria-label="Next reviews"
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = '#000')}
+              >
+                →
+              </button>
+            </div>
           </div>
         </div>
       </section>
