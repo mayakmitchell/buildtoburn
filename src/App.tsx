@@ -218,7 +218,7 @@ function App() {
 
       <section className="mobile-stats-numbers">
         <div className="stats-section mobile-stats-panel">
-          <h2 className="stats-title" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>BY THE NUMBERS</h2>
+          <h2 className="stats-title mobile-section-title">BY THE NUMBERS</h2>
           <div className="mobile-stats-grid">
             <div className="stat-box">
               <div className="stat-number">100+</div>
@@ -340,7 +340,7 @@ function App() {
         </div>
 
         <div className="reviews-mobile-title">
-          <h2 className="stats-title">RATINGS & REVIEWS</h2>
+          <h2 className="stats-title mobile-section-title">RATINGS & REVIEWS</h2>
         </div>
 
         <div className="reviews-container">

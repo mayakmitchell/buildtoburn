@@ -238,8 +238,8 @@ nav {
 .hero-right {
   position: relative;
   overflow: hidden;
-  height: 100%;
-  aspect-ratio: 4 / 5;
+  height: calc(100vh - 120px);
+  min-height: calc(100vh - 120px);
 }
 
 .carousel-img {
@@ -598,6 +598,11 @@ nav {
   border-top: none;
 }
 
+.mobile-section-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
 .mobile-stats-grid {
   display: flex;
   justify-content: center;
@@ -897,6 +902,11 @@ footer {
     min-height: 400px;
   }
 
+  .hero-right {
+    height: 400px;
+    min-height: 400px;
+  }
+
   .why-grid,
   .stats-grid {
     grid-template-columns: 1fr;
@@ -941,11 +951,12 @@ footer {
   .bio-section {
     max-height: none;
     overflow: visible;
+    padding-top: 0.75rem;
   }
 
   .bio-left {
     min-height: auto;
-    padding: 2rem 5% 0 5%;
+    padding: 2.5rem 5% 0 5%;
     display: flex;
     justify-content: center;
   }
@@ -973,7 +984,7 @@ footer {
     width: 100%;
     height: auto;
     max-height: 450px;
-    margin-top: 1rem;
+    margin-top: 0;
   }
 
   /* Navigation overrides */
@@ -1017,12 +1028,16 @@ footer {
 
   .mobile-gallery-section {
     display: block;
-    padding: 0 5% 1.5rem;
+    padding: 1rem 5% 1rem;
+  }
+
+  .mobile-gallery-shell {
+    max-width: 100%;
   }
 
   .reviews-mobile-title {
     display: block;
-    padding-bottom: 1rem;
+    padding: 0.75rem 0 1rem;
   }
 }
 
