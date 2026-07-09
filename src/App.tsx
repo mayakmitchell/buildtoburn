@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
+
+const SIGNUP_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzTX37vFmW-F2gowNrwW8Z8AKrj1HGbzcyIy_KgIC_rpXXz0v4IFOtD5G5EWjojoPZk/exec';
 
 function App() {
   const [activeApproach, setActiveApproach] = useState(0);
@@ -6,6 +8,8 @@ function App() {
   const [currentMobileGalleryIndex, setCurrentMobileGalleryIndex] = useState(0);
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupStatus, setSignupStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const bioImage = '/assets/coach_marie_final.jpg';
   const journeyImage = '/assets/journey_image.jpg';
@@ -117,6 +121,28 @@ function App() {
 
   const prevTestimonial = () => {
     setCurrentTestimonialIndex((prev) => Math.max(0, prev - 2));
+  };
+
+  const handleSignupSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSignupStatus('submitting');
+
+    try {
+      await fetch(SIGNUP_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({
+          email: signupEmail,
+          source: 'buildtoburn.com',
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+
+      setSignupEmail('');
+      setSignupStatus('success');
+    } catch {
+      setSignupStatus('error');
+    }
   };
 
   return (
@@ -456,10 +482,34 @@ function App() {
       <section id="consultation" className="form-section">
         <h2 className="help-title" style={{ marginBottom: '1rem' }}>READY TO GET STARTED?</h2>
         <p>If you're ready to train smarter, feel stronger, and build confidence that carries into every part of your life, Build to Burn is here to support you.</p>
-        <form className="form-group" onSubmit={(e) => { e.preventDefault(); alert("Thanks for submitting! We'll be in touch soon."); }}>
-          <input type="email" placeholder="Enter your email address" required />
-          <button type="submit" className="btn" style={{ minWidth: '200px' }}>Submit Request</button>
+        <form className="form-group" onSubmit={handleSignupSubmit}>
+          <input
+            type="email"
+            placeholder="Enter your email address"
+            value={signupEmail}
+            onChange={(event) => {
+              setSignupEmail(event.target.value);
+              if (signupStatus !== 'idle') {
+                setSignupStatus('idle');
+              }
+            }}
+            required
+          />
+          <button
+            type="submit"
+            className="btn"
+            style={{ minWidth: '200px' }}
+            disabled={signupStatus === 'submitting'}
+          >
+            {signupStatus === 'submitting' ? 'Submitting...' : 'Submit Request'}
+          </button>
         </form>
+        {signupStatus === 'success' && (
+          <p className="form-message success">Thank you. We'll be in touch soon.</p>
+        )}
+        {signupStatus === 'error' && (
+          <p className="form-message error">Something went wrong. Please try again.</p>
+        )}
       </section>
 
       {/* Footer */}
