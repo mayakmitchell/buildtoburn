@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 function App() {
   const [activeApproach, setActiveApproach] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentMobileGalleryIndex, setCurrentMobileGalleryIndex] = useState(0);
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const bioImage = '/assets/coach_marie_final.jpg';
   const journeyImage = '/assets/journey_image.jpg';
@@ -14,6 +16,13 @@ function App() {
   const hero_4 = '/assets/media__1776044929674.jpg';
 
   const carouselImages = [hero_1, hero_2, hero_3, hero_4];
+  const mobileGalleryImages = [
+    '/assets/mobile-gallery-1.jpg',
+    '/assets/mobile-gallery-2.jpg',
+    '/assets/mobile-gallery-3.jpg',
+    '/assets/mobile-gallery-4.jpg',
+    '/assets/mobile-gallery-5.jpg',
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,6 +30,13 @@ function App() {
     }, 5000);
     return () => clearInterval(interval);
   }, [carouselImages.length]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMobileGalleryIndex((prev) => (prev + 1) % mobileGalleryImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [mobileGalleryImages.length]);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
@@ -117,9 +133,30 @@ function App() {
           <a href="#bio">Meet Marie</a>
           <a href="#pricing">Pricing</a>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+
+        {/* Mobile dropdown menu */}
+        <div className={`nav-mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+          <a href="#philosophy" onClick={() => setIsMobileMenuOpen(false)}>Philosophy</a>
+          <a href="#approach" onClick={() => setIsMobileMenuOpen(false)}>Approach</a>
+          <a href="#bio" onClick={() => setIsMobileMenuOpen(false)}>Meet Marie</a>
+          <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
+        </div>
+
+        <div className="nav-actions">
           <span className="nav-contact">SAN DIEGO, CA</span>
-          <a href="#consultation" className="btn" style={{ padding: '0.8rem 1.5rem', fontSize: '0.85rem' }}>Start Training</a>
+          <a href="#consultation" className="btn nav-cta-btn" style={{ padding: '0.8rem 1.5rem', fontSize: '0.85rem' }}>Start Training</a>
+          
+          {/* Hamburger toggle button */}
+          <button 
+            className={`nav-hamburger ${isMobileMenuOpen ? 'open' : ''}`} 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </nav>
 
@@ -134,7 +171,8 @@ function App() {
           <p>
             Personalized strength training for real life, not extremes.
           </p>
-          <div>
+          {/* Desktop CTA — hidden on mobile */}
+          <div className="hero-btn-wrapper">
             <a href="#consultation" className="btn">BOOK A CONSULTATION</a>
             <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>No commitment required.</div>
           </div>
@@ -175,6 +213,49 @@ function App() {
             <h3>EMPOWER THE MIND AND BODY</h3>
             <p>We are dedicated to helping women feel strong, both physically and mentally.</p>
           </div>
+        </div>
+      </section>
+
+      <section className="mobile-stats-numbers">
+        <div className="stats-section mobile-stats-panel">
+          <h2 className="stats-title" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>BY THE NUMBERS</h2>
+          <div className="mobile-stats-grid">
+            <div className="stat-box">
+              <div className="stat-number">100+</div>
+              <div className="stat-label">Client Transformations</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-number">5</div>
+              <div className="stat-label">Average Rating (Out of 5.0)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mobile-gallery-section">
+        <div className="mobile-gallery-shell">
+          {mobileGalleryImages.map((img, index) => (
+            <img
+              key={img}
+              src={img}
+              alt={`Build to Burn mobile gallery ${index + 1}`}
+              className={`carousel-img mobile-gallery-img ${index === currentMobileGalleryIndex ? 'active' : ''}`}
+            />
+          ))}
+          <button
+            className="carousel-btn prev"
+            onClick={() => setCurrentMobileGalleryIndex((prev) => (prev === 0 ? mobileGalleryImages.length - 1 : prev - 1))}
+            aria-label="Previous gallery image"
+          >
+            ‹
+          </button>
+          <button
+            className="carousel-btn next"
+            onClick={() => setCurrentMobileGalleryIndex((prev) => (prev + 1) % mobileGalleryImages.length)}
+            aria-label="Next gallery image"
+          >
+            ›
+          </button>
         </div>
       </section>
 
@@ -248,30 +329,36 @@ function App() {
           <div>
             <h2 className="stats-title" style={{ maxWidth: '500px' }}>BUILD TO BURN HAS EMPOWERED HUNDREDS OF WOMEN</h2>
           </div>
-          <div className="stat-box">
+          <div className="stat-box stats-desktop-only">
             <div className="stat-number">100+</div>
             <div className="stat-label">Client Transformations</div>
           </div>
-          <div className="stat-box">
+          <div className="stat-box stats-desktop-only">
             <div className="stat-number">5</div>
             <div className="stat-label">Average Rating (Out of 5.0)</div>
           </div>
         </div>
 
-        <div style={{ paddingTop: '3rem', width: '100%' }}>
+        <div className="reviews-mobile-title">
+          <h2 className="stats-title">RATINGS & REVIEWS</h2>
+        </div>
+
+        <div className="reviews-container">
           <div style={{ position: 'relative', width: '100%' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="reviews-list">
               {[0, 1].map((offset) => {
                 const index = (currentTestimonialIndex + offset) % testimonials.length;
                 const review = testimonials[index];
                 return (
-                  <div key={`${currentTestimonialIndex}-${offset}`} className="review-animate" style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', width: '100%', padding: '3rem 0', borderTop: '1px solid #eaeaea' }}>
-                    <div style={{ flex: '0 0 250px' }}>
-                      <div style={{ fontWeight: '700', marginBottom: '0.5rem', fontSize: '1.2rem', color: '#111' }}>{review.name}</div>
-                      <div style={{ color: '#f5b041', fontSize: '1.1rem' }}>★★★★★ <span style={{ color: '#888', fontSize: '0.85rem', marginLeft: '0.5rem' }}>5/5</span></div>
+                  <div key={`${currentTestimonialIndex}-${offset}`} className="review-card review-animate">
+                    <div className="review-author">
+                      <div className="review-author-name">{review.name}</div>
+                      <div className="review-rating">
+                        ★★★★★ <span className="review-rating-label">5/5</span>
+                      </div>
                     </div>
-                    <div style={{ flex: '1', minWidth: '300px' }}>
-                      <p style={{ margin: '0', color: '#555', lineHeight: '1.8', fontSize: '1.05rem' }}>
+                    <div className="review-body">
+                      <p>
                         {review.text}
                       </p>
                     </div>
@@ -279,7 +366,7 @@ function App() {
                 );
               })}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', borderTop: '1px solid #eaeaea', paddingTop: '2.5rem' }}>
+            <div className="review-pagination">
               <button 
                 onClick={prevTestimonial} 
                 style={{ background: 'transparent', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.8rem', opacity: currentPage > 1 ? 1 : 0, pointerEvents: currentPage > 1 ? 'auto' : 'none', padding: '0 0.5rem', transition: 'color 0.2s' }} 

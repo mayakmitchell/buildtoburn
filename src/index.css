@@ -6,8 +6,8 @@
   /* Warm cream/off-white */
   --color-text: #111111;
   --color-text-muted: #555555;
-  --color-accent: #c38b71;
-  /* Teracotta / warm accent */
+  --color-accent: #e85d1f;
+  /* Deep burning orange */
   --font-sans: 'Inter', sans-serif;
   --font-heading: 'Oswald', sans-serif;
 }
@@ -40,9 +40,9 @@ h5,
 h6 {
   font-family: var(--font-heading);
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.1;
-  letter-spacing: -0.5px;
+  letter-spacing: 0;
 }
 
 p {
@@ -163,6 +163,7 @@ nav {
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .nav-links {
@@ -187,6 +188,12 @@ nav {
 .nav-contact {
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* Split Hero Section */
@@ -232,6 +239,7 @@ nav {
   position: relative;
   overflow: hidden;
   height: 100%;
+  aspect-ratio: 4 / 5;
 }
 
 .carousel-img {
@@ -578,6 +586,43 @@ nav {
 
 .stats-title {
   font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.mobile-stats-numbers {
+  display: none;
+}
+
+.mobile-stats-panel {
+  border-top: none;
+}
+
+.mobile-stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.mobile-gallery-section {
+  display: none;
+}
+
+.mobile-gallery-shell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  max-width: 92vw;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.mobile-gallery-img {
+  object-fit: cover;
+}
+
+.reviews-mobile-title {
+  display: none;
 }
 
 .stat-box {
@@ -693,8 +738,144 @@ footer {
   text-align: center;
 }
 
-@media (max-width: 900px) {
+/* Reviews & Testimonial Styling */
+.reviews-container {
+  padding-top: 3rem;
+  width: 100%;
+}
 
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-card {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  padding: 3rem 0;
+  border-top: 1px solid #eaeaea;
+}
+
+.review-author {
+  flex: 0 0 250px;
+}
+
+.review-author-name {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: #111;
+}
+
+.review-rating {
+  color: #f5b041;
+  font-size: 1.1rem;
+}
+
+.review-rating-label {
+  color: #888;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+.review-body {
+  flex: 1;
+  min-width: 300px;
+}
+
+.review-body p {
+  margin: 0 !important;
+  color: #555;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.review-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  border-top: 1px solid #eaeaea;
+  padding-top: 2.5rem;
+}
+
+/* Mobile Hamburger Menu Elements */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 110;
+}
+
+.nav-hamburger span {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text);
+  transition: all 0.3s ease;
+  transform-origin: left center;
+}
+
+.nav-hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(1px, -1px);
+}
+
+.nav-hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(1px, 1px);
+}
+
+/* Mobile Dropdown Menu */
+.nav-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid #eaeaea;
+  padding: 1.5rem 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 99;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-mobile-menu a {
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.nav-mobile-menu a:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 900px) {
   .hero-split,
   .help-section,
   .journey-section,
@@ -725,11 +906,179 @@ footer {
     text-align: center;
   }
 
+  .stats-grid > div:first-child {
+    display: none;
+  }
+
+  .stats-desktop-only {
+    display: none;
+  }
+
   .nav-links {
     display: none;
   }
 
   .form-group {
     flex-direction: column;
+  }
+
+  /* General mobile overrides */
+  .why-section {
+    padding: 4rem 5%;
+    min-height: auto;
+  }
+
+  .why-header {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Collapse the large margin on help-section to eliminate whitespace gap */
+  .help-section {
+    margin: 0;
+  }
+
+  /* Bio Section mobile fixes */
+  .bio-section {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bio-left {
+    min-height: auto;
+    padding: 2rem 5% 0 5%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .bio-left img {
+    width: 100%;
+    max-height: 450px;
+    object-position: center 30%;
+  }
+
+  .bio-right {
+    padding: 2rem 5% 4rem 5%;
+  }
+
+  /* Help/Journey Section mobile fixes */
+  .help-right {
+    min-height: auto;
+    padding: 0 5% 4rem 5%;
+  }
+
+  .help-right img {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 450px;
+    margin-top: 1rem;
+  }
+
+  /* Navigation overrides */
+  nav {
+    padding: 1rem 5%;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+  }
+
+  .nav-actions {
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .nav-hamburger {
+    display: flex;
+  }
+
+  /* Shrink the Start Training button to fit the mobile header */
+  .nav-cta-btn {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.7rem !important;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .nav-contact {
+    display: none;
+  }
+
+  .mobile-stats-numbers {
+    display: block;
+  }
+
+  .mobile-stats-panel {
+    padding-top: 0;
+    padding-bottom: 1rem;
+  }
+
+  .mobile-gallery-section {
+    display: block;
+    padding: 0 5% 1.5rem;
+  }
+
+  .reviews-mobile-title {
+    display: block;
+    padding-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Testimonial / Review card mobile overrides */
+  .review-card {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 0;
+  }
+
+  .review-author {
+    flex: none;
+    width: 100%;
+  }
+
+  .review-body {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Hero title — bolder, larger on mobile for visual impact */
+  .hero-title {
+    font-size: 3.45rem;
+    line-height: 1.02;
+    font-weight: 900;
+  }
+
+  .mobile-stats-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .mobile-stats-grid .stat-box {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  /* Accordion left padding adjustment */
+  .list-content > p {
+    padding-left: calc(24px + 0.8rem);
+    padding-bottom: 1rem;
+  }
+
+  /* Pricing grid mobile responsive stacking */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .pricing-card {
+    padding: 2rem 1.5rem;
+    min-height: auto;
   }
 }
