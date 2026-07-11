@@ -14,12 +14,10 @@ function App() {
   const bioImage = '/assets/coach_marie_final.jpg';
   const journeyImage = '/assets/journey_image.jpg';
   
-  const hero_1 = '/assets/media__1776044929061.jpg';
   const hero_2 = '/assets/media__1776044929075.jpg';
-  const hero_3 = '/assets/media__1776044929628.jpg';
   const hero_4 = '/assets/media__1776044929674.jpg';
 
-  const carouselImages = [hero_1, hero_2, hero_3, hero_4];
+  const carouselImages = [hero_2, hero_4, journeyImage];
   const mobileGalleryImages = [
     '/assets/mobile-gallery-1.jpg',
     '/assets/mobile-gallery-2.jpg',
@@ -42,29 +40,21 @@ function App() {
     return () => clearInterval(interval);
   }, [mobileGalleryImages.length]);
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
-  };
-
   const approaches = [
     {
-      title: '1. MEET YOU WHERE YOU ARE.',
+      title: '1. Meet you where you are.',
       content: "Whether you're just starting, rebuilding strength, or advancing performance, we tailor fitness to match your goals."
     },
     {
-      title: '2. PLAN STRENGTH.',
+      title: '2. Plan strength.',
       content: "With progressive, intentional training personalized to your life, we'll target building real, long-term strength through routines that seamlessly integrate into a busy life."
     },
     {
-      title: '3. PROTECT YOUR BODY.',
+      title: '3. Protect your body.',
       content: 'Prioritizing proper technique and mobility work so you can train intentionally while remaining safe and injury-free.'
     },
     {
-      title: '4. FEEL BETTER.',
+      title: '4. Feel better.',
       content: 'Gain confidence through consistency. Build resilience, body recomposition, and mental strength.'
     }
   ];
@@ -186,13 +176,23 @@ function App() {
         </div>
       </nav>
 
-      {/* Hero Split Section */}
+      {/* Hero Section */}
       <section className="hero-split">
+        <div className="hero-right">
+          {carouselImages.map((img, index) => (
+            <img
+              key={img}
+              src={img}
+              alt={`Build to Burn Hero ${index + 1}`}
+              className={`carousel-img ${index === currentImageIndex ? 'active' : ''}`}
+            />
+          ))}
+        </div>
         <div className="hero-left">
           <h1 className="hero-title">
-            BUILD STRENGTH,<br />
-            BUILD CONFIDENCE,<br />
-            <span style={{ color: 'var(--color-accent)' }}>BUILD TO BURN</span>
+            Build strength,<br />
+            Build confidence,<br />
+            <span>Build to Burn</span>
           </h1>
           <p>
             Personalized strength training for real life, not extremes.
@@ -200,43 +200,31 @@ function App() {
           {/* Desktop CTA — hidden on mobile */}
           <div className="hero-btn-wrapper">
             <a href="#consultation" className="btn">BOOK A CONSULTATION</a>
-            <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>No commitment required.</div>
+            <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.82)', marginTop: '0.5rem' }}>No commitment required.</div>
           </div>
-        </div>
-        <div className="hero-right">
-          {carouselImages.map((img, index) => (
-            <img
-              key={index}
-              src={img}
-              alt={`Build to Burn Hero ${index + 1}`}
-              className={`carousel-img ${index === currentImageIndex ? 'active' : ''}`}
-            />
-          ))}
-          <button className="carousel-btn prev" onClick={prevImage} aria-label="Previous image">‹</button>
-          <button className="carousel-btn next" onClick={nextImage} aria-label="Next image">›</button>
         </div>
       </section>
 
       {/* Philosophy Section */}
       <section id="philosophy" className="why-section">
         <div className="why-header">
-          <h2 className="why-title">REAL TRAINING, REAL RESULTS</h2>
+          <h2 className="why-title">Real training, real results</h2>
           <p>Our commitment to authenticity sets Build to Burn apart. Instead of quick-fixes or fitness influencer hype, we align your goals with personalized coaching for sustainable results.</p>
         </div>
         <div className="why-grid">
           <div className="why-item">
             <div className="why-line"></div>
-            <h3>CLEAR PROGRESS</h3>
+            <h3>Clear progress</h3>
             <p>Achieve long-term results through progressive overload and structured support, guiding you every step along the way.</p>
           </div>
           <div className="why-item">
             <div className="why-line"></div>
-            <h3>REALISTIC LIFE BALANCE</h3>
+            <h3>Realistic life balance</h3>
             <p>Fitness should enhance your life, not take it over. Workouts are designed to integrate seamlessly into your busy routines.</p>
           </div>
           <div className="why-item">
             <div className="why-line"></div>
-            <h3>EMPOWER THE MIND AND BODY</h3>
+            <h3>Empower the mind and body</h3>
             <p>We are dedicated to helping women feel strong, both physically and mentally.</p>
           </div>
         </div>
@@ -244,7 +232,7 @@ function App() {
 
       <section className="mobile-stats-numbers">
         <div className="stats-section mobile-stats-panel">
-          <h2 className="stats-title mobile-section-title">BY THE NUMBERS</h2>
+          <h2 className="stats-title mobile-section-title">By the numbers</h2>
           <div className="mobile-stats-grid">
             <div className="stat-box">
               <div className="stat-number">100+</div>
@@ -288,7 +276,7 @@ function App() {
       {/* Help Grid Section (Approach) */}
       <section id="approach" className="help-section">
         <div className="help-left">
-          <h2 className="help-title" style={{ marginBottom: '2rem' }}>YOUR JOURNEY WITH US</h2>
+          <h2 className="help-title" style={{ marginBottom: '2rem' }}>Your journey with us</h2>
           <div className="journey-list">
             {approaches.map((item, index) => (
               <div
@@ -310,7 +298,30 @@ function App() {
           </div>
         </div>
         <div className="help-right">
-          <img src={journeyImage} alt="Your Journey with Us" />
+          <div className="journey-gallery-shell">
+            {mobileGalleryImages.map((img, index) => (
+              <img
+                key={img}
+                src={img}
+                alt={`Build to Burn journey gallery ${index + 1}`}
+                className={`carousel-img journey-gallery-img ${index === currentMobileGalleryIndex ? 'active' : ''}`}
+              />
+            ))}
+            <button
+              className="carousel-btn prev"
+              onClick={() => setCurrentMobileGalleryIndex((prev) => (prev === 0 ? mobileGalleryImages.length - 1 : prev - 1))}
+              aria-label="Previous journey gallery image"
+            >
+              ‹
+            </button>
+            <button
+              className="carousel-btn next"
+              onClick={() => setCurrentMobileGalleryIndex((prev) => (prev + 1) % mobileGalleryImages.length)}
+              aria-label="Next journey gallery image"
+            >
+              ›
+            </button>
+          </div>
         </div>
       </section>
 
@@ -320,8 +331,8 @@ function App() {
           <img src={bioImage} alt="Marie - Founder of Build to Burn" />
         </div>
         <div className="bio-right">
-          <div className="bio-label">MEET THE COACH</div>
-          <h2 className="bio-title">HI, I'M MARIE</h2>
+          <div className="bio-label">Meet the coach</div>
+          <h2 className="bio-title">Hi, I'm Marie</h2>
           <div className="bio-subtitle">Founder of Build to Burn</div>
 
           <p className="bio-paragraph">
@@ -353,7 +364,7 @@ function App() {
       <section className="stats-section">
         <div className="stats-grid">
           <div>
-            <h2 className="stats-title" style={{ maxWidth: '500px' }}>BUILD TO BURN HAS EMPOWERED HUNDREDS OF WOMEN</h2>
+            <h2 className="stats-title" style={{ maxWidth: '500px' }}>Build to Burn has empowered hundreds of women</h2>
           </div>
           <div className="stat-box stats-desktop-only">
             <div className="stat-number">100+</div>
@@ -366,7 +377,7 @@ function App() {
         </div>
 
         <div className="reviews-mobile-title">
-          <h2 className="stats-title mobile-section-title">RATINGS & REVIEWS</h2>
+          <h2 className="stats-title mobile-section-title">Ratings & reviews</h2>
         </div>
 
         <div className="reviews-container">
@@ -395,24 +406,24 @@ function App() {
             <div className="review-pagination">
               <button 
                 onClick={prevTestimonial} 
-                style={{ background: 'transparent', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.8rem', opacity: currentPage > 1 ? 1 : 0, pointerEvents: currentPage > 1 ? 'auto' : 'none', padding: '0 0.5rem', transition: 'color 0.2s' }} 
+                style={{ background: 'transparent', color: 'var(--color-text)', border: 'none', cursor: 'pointer', fontSize: '1.8rem', opacity: currentPage > 1 ? 1 : 0, pointerEvents: currentPage > 1 ? 'auto' : 'none', padding: '0 0.5rem', transition: 'color 0.2s' }} 
                 aria-label="Previous reviews"
                 onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#000')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
               >
                 ←
               </button>
               
-              <div style={{ fontSize: '1rem', fontWeight: '500', color: '#111', minWidth: '40px', textAlign: 'center' }}>
+              <div style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--color-text)', minWidth: '40px', textAlign: 'center' }}>
                 {currentPage} / {totalPages}
               </div>
               
               <button 
                 onClick={nextTestimonial} 
-                style={{ background: 'transparent', color: '#000', border: 'none', cursor: 'pointer', fontSize: '1.8rem', opacity: currentPage < totalPages ? 1 : 0, pointerEvents: currentPage < totalPages ? 'auto' : 'none', padding: '0 0.5rem', transition: 'color 0.2s' }} 
+                style={{ background: 'transparent', color: 'var(--color-text)', border: 'none', cursor: 'pointer', fontSize: '1.8rem', opacity: currentPage < totalPages ? 1 : 0, pointerEvents: currentPage < totalPages ? 'auto' : 'none', padding: '0 0.5rem', transition: 'color 0.2s' }} 
                 aria-label="Next reviews"
                 onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#000')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
               >
                 →
               </button>
@@ -424,53 +435,53 @@ function App() {
       {/* Pricing Section */}
       <section id="pricing" className="pricing-section">
         <div className="text-center mb-6">
-          <h2 className="help-title" style={{ marginBottom: '1rem' }}>COACHING OPTIONS</h2>
+          <h2 className="help-title" style={{ marginBottom: '1rem' }}>Coaching options</h2>
           <p style={{ maxWidth: '800px', margin: '0 auto' }}>It's more than just a workout program, it's a supportive coaching experience.</p>
         </div>
 
         <div className="pricing-grid">
           <div className="pricing-card">
             <h3 className="pricing-title">Group Training</h3>
-            <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1rem', color: '#111' }}>
+            <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1rem', color: 'var(--color-text)' }}>
               <span>Package</span>
               <span>Price</span>
             </div>
             <ul className="pricing-features">
-              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>2-1 Package</span> <span style={{color: '#111', fontWeight: 500}}>$45</span></li>
-              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>3-1 Package</span> <span style={{color: '#111', fontWeight: 500}}>$35</span></li>
-              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>4+ Package</span> <span style={{color: '#111', fontWeight: 500}}>$30</span></li>
+              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>2-1 Package</span> <span style={{color: 'var(--color-text)', fontWeight: 500}}>$45</span></li>
+              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>3-1 Package</span> <span style={{color: 'var(--color-text)', fontWeight: 500}}>$35</span></li>
+              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>4+ Package</span> <span style={{color: 'var(--color-text)', fontWeight: 500}}>$30</span></li>
             </ul>
             <a href="#consultation" className="btn btn-outline">Select Plan</a>
           </div>
 
-          <div className="pricing-card" style={{ border: '2px solid #111', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
-            <h3 className="pricing-title">PERSONAL TRAINING</h3>
-            <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1rem', color: '#111' }}>
+          <div className="pricing-card" style={{ border: '2px solid var(--color-text)', boxShadow: '0 10px 30px rgba(58,52,48,0.12)' }}>
+            <h3 className="pricing-title">Personal Training</h3>
+            <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1rem', color: 'var(--color-text)' }}>
               <span>Package</span>
               <span>Price</span>
             </div>
             <ul className="pricing-features">
-              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>6 Sessions</span> <span style={{color: '#111', fontWeight: 500}}>$650</span></li>
-              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>12 Sessions</span> <span style={{color: '#111', fontWeight: 500}}>$1225</span></li>
-              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>24 Sessions</span> <span style={{color: '#111', fontWeight: 500}}>$2305</span></li>
+              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>6 Sessions</span> <span style={{color: 'var(--color-text)', fontWeight: 500}}>$650</span></li>
+              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>12 Sessions</span> <span style={{color: 'var(--color-text)', fontWeight: 500}}>$1225</span></li>
+              <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem' }}><span>24 Sessions</span> <span style={{color: 'var(--color-text)', fontWeight: 500}}>$2305</span></li>
             </ul>
             <a href="#consultation" className="btn">Select Plan</a>
           </div>
 
           <div className="pricing-card">
             <h3 className="pricing-title">Online Coaching</h3>
-            <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1rem', color: '#111' }}>
+            <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1rem', color: 'var(--color-text)' }}>
               <span>Program</span>
               <span>Price</span>
             </div>
             <ul className="pricing-features">
               <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem', textAlign: 'left' }}>
                 <span style={{paddingRight: '1rem'}}>Online Coaching</span> 
-                <span style={{color: '#111', fontWeight: 500}}>$229 / mo</span>
+                <span style={{color: 'var(--color-text)', fontWeight: 500}}>$229 / mo</span>
               </li>
               <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f0f0f0', paddingBottom: '0.5rem', textAlign: 'left' }}>
                 <span style={{paddingRight: '1rem', lineHeight: '1.2'}}>Online Coaching <br/>+ Live Classes <br/><span style={{fontSize: '0.75rem', color: 'var(--color-accent)'}}>(Most Popular)</span></span> 
-                <span style={{color: '#111', fontWeight: 500}}>$279 / mo</span>
+                <span style={{color: 'var(--color-text)', fontWeight: 500}}>$279 / mo</span>
               </li>
             </ul>
             <a href="#consultation" className="btn btn-outline">Select Plan</a>
@@ -480,7 +491,7 @@ function App() {
 
       {/* Form Section */}
       <section id="consultation" className="form-section">
-        <h2 className="help-title" style={{ marginBottom: '1rem' }}>READY TO GET STARTED?</h2>
+        <h2 className="help-title" style={{ marginBottom: '1rem' }}>Ready to get started?</h2>
         <p>If you're ready to train smarter, feel stronger, and build confidence that carries into every part of your life, Build to Burn is here to support you.</p>
         <form className="form-group" onSubmit={handleSignupSubmit}>
           <input
@@ -505,7 +516,7 @@ function App() {
           </button>
         </form>
         {signupStatus === 'success' && (
-          <p className="form-message success">Thank you. We'll be in touch soon.</p>
+          <p className="form-message success">Thank you. We will be in touch soon.</p>
         )}
         {signupStatus === 'error' && (
           <p className="form-message error">Something went wrong. Please try again.</p>

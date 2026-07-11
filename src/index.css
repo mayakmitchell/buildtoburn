@@ -1,11 +1,11 @@
 :root {
   --color-bg: #ffffff;
-  --color-bg-alt: #f8f9fa;
+  --color-bg-alt: #f7f4f1;
   /* Very subtle light gray */
-  --color-bg-cream: #faf8f5;
+  --color-bg-cream: #fbf6f1;
   /* Warm cream/off-white */
-  --color-text: #111111;
-  --color-text-muted: #555555;
+  --color-text: #3a3430;
+  --color-text-muted: #6f665f;
   --color-accent: #e85d1f;
   /* Deep burning orange */
   --font-sans: 'Inter', sans-serif;
@@ -39,9 +39,9 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  text-transform: uppercase;
-  font-weight: 800;
-  line-height: 1.1;
+  text-transform: none;
+  font-weight: 700;
+  line-height: 1.12;
   letter-spacing: 0;
 }
 
@@ -135,7 +135,7 @@ ul {
 
 /* Topbar */
 .topbar {
-  background-color: #000;
+  background-color: var(--color-text);
   color: #fff;
   text-align: center;
   padding: 0.5rem;
@@ -164,6 +164,7 @@ nav {
   font-weight: 700;
   letter-spacing: 1px;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .nav-links {
@@ -196,30 +197,61 @@ nav {
   gap: 1rem;
 }
 
-/* Split Hero Section */
+/* Hero Section */
 .hero-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: calc(100vh - 120px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: clamp(500px, calc(100svh - 148px), 720px);
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--color-text);
 }
 
 .hero-left {
-  padding: 8% 8% 4rem 10%;
+  position: relative;
+  z-index: 3;
+  width: min(760px, 90%);
+  padding: clamp(5rem, 10vh, 8rem) 8% clamp(4rem, 9vh, 7rem) 10%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.36);
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 4.5vw, 4rem);
-  line-height: 1.2;
+  font-size: clamp(2.6rem, 4.8vw, 4.9rem);
+  line-height: 1.02;
   margin-bottom: 1.5rem;
+  max-width: 700px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.hero-title span {
+  color: #e28a5f;
 }
 
 .hero-left p {
-  font-size: 1.15rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
   margin-bottom: 2rem;
   max-width: 500px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.hero-left .btn {
+  background-color: #fff;
+  border-color: #fff;
+  color: var(--color-text);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+}
+
+.hero-left .btn:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
 }
 
 .stars {
@@ -236,10 +268,23 @@ nav {
 }
 
 .hero-right {
-  position: relative;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  height: calc(100vh - 120px);
-  min-height: calc(100vh - 120px);
+  height: 100%;
+  min-height: 100%;
+  z-index: 1;
+}
+
+.hero-right::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(28, 24, 22, 0.78) 0%, rgba(28, 24, 22, 0.58) 38%, rgba(28, 24, 22, 0.18) 100%),
+    linear-gradient(0deg, rgba(28, 24, 22, 0.42) 0%, rgba(28, 24, 22, 0.1) 42%, rgba(28, 24, 22, 0.22) 100%);
+  pointer-events: none;
 }
 
 .carousel-img {
@@ -272,7 +317,7 @@ nav {
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  z-index: 10;
+  z-index: 4;
   transition: background-color 0.2s;
   color: var(--color-text);
 }
@@ -325,9 +370,9 @@ nav {
 
 .bio-label {
   font-family: var(--font-heading);
-  text-transform: uppercase;
+  text-transform: none;
   font-size: 0.85rem;
-  letter-spacing: 1px;
+  letter-spacing: 0;
   color: var(--color-accent);
   margin-bottom: 0.2rem;
 }
@@ -367,7 +412,7 @@ nav {
   color: var(--color-accent);
   display: inline-flex;
   align-items: center;
-  background-color: rgba(195, 139, 113, 0.15);
+  background-color: rgba(232, 93, 31, 0.13);
   border-radius: 50%;
   padding: 0.3rem;
   font-size: 0.8rem;
@@ -401,15 +446,33 @@ nav {
   position: relative;
 }
 
-.help-right img {
+.help-right > img,
+.journey-gallery-shell {
   position: absolute;
-  top: -3rem;
+  top: 50%;
   left: 5%;
   width: 90%;
-  height: clamp(500px, 600px, 700px);
-  object-fit: cover;
   z-index: 2;
   border-radius: 4px;
+  transform: translateY(-50%);
+}
+
+.help-right > img {
+  object-fit: cover;
+}
+
+.journey-gallery-shell {
+  aspect-ratio: 1 / 1;
+  width: min(90%, 600px);
+  height: auto;
+  overflow: hidden;
+  background-color: var(--color-text);
+  box-shadow: 0 18px 46px rgba(58, 52, 48, 0.16);
+}
+
+.journey-gallery-img {
+  object-fit: cover;
+  object-position: center;
 }
 
 .help-title {
@@ -518,7 +581,7 @@ nav {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1px solid #000;
+  border: 1px solid var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -564,7 +627,7 @@ nav {
 }
 
 .list-item.active .list-icon {
-  background-color: #000;
+  background-color: var(--color-text);
   color: #fff;
 }
 
@@ -755,7 +818,7 @@ nav {
 
 /* Footer */
 footer {
-  background-color: #000;
+  background-color: var(--color-text);
   color: #fff;
   padding: 3rem 5%;
   text-align: center;
@@ -788,7 +851,7 @@ footer {
   font-weight: 700;
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  color: #111;
+  color: var(--color-text);
 }
 
 .review-rating {
@@ -809,7 +872,7 @@ footer {
 
 .review-body p {
   margin: 0 !important;
-  color: #555;
+  color: var(--color-text-muted);
   line-height: 1.8;
   font-size: 1.05rem;
 }
@@ -899,7 +962,6 @@ footer {
 }
 
 @media (max-width: 900px) {
-  .hero-split,
   .help-section,
   .journey-section,
   .bio-section {
@@ -921,8 +983,7 @@ footer {
   }
 
   .hero-right {
-    height: 400px;
-    min-height: 400px;
+    min-height: 100%;
   }
 
   .why-grid,
@@ -991,14 +1052,15 @@ footer {
 
   /* Help/Journey Section mobile fixes */
   .help-right {
-    min-height: auto;
-    padding: 0 5% 4rem 5%;
+    display: none;
   }
 
-  .help-right img {
+  .help-right > img,
+  .journey-gallery-shell {
     position: relative;
     top: 0;
     left: 0;
+    transform: none;
     width: 100%;
     height: auto;
     max-height: 450px;
@@ -1082,9 +1144,9 @@ footer {
 @media (max-width: 600px) {
   /* Hero title — bolder, larger on mobile for visual impact */
   .hero-title {
-    font-size: 3.45rem;
+    font-size: 3.1rem;
     line-height: 1.02;
-    font-weight: 900;
+    font-weight: 700;
   }
 
   .mobile-stats-grid {
