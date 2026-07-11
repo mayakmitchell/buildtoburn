@@ -523,6 +523,25 @@ nav {
   gap: 2rem;
 }
 
+.why-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.why-grid.is-visible .why-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.why-grid.is-visible .why-item:nth-child(2) {
+  transition-delay: 0.14s;
+}
+
+.why-grid.is-visible .why-item:nth-child(3) {
+  transition-delay: 0.28s;
+}
+
 .why-item h3 {
   font-size: 1.4rem;
   margin-bottom: 1rem;
@@ -704,9 +723,22 @@ nav {
   margin-bottom: 0.5rem;
 }
 
+.stat-number-animated {
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
 .stat-label {
   color: var(--color-text-muted);
   font-size: 0.95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 @keyframes fadeInTestimonial {

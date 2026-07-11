@@ -10,6 +10,9 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [signupEmail, setSignupEmail] = useState('');
   const [signupStatus, setSignupStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [hasSeenWhySection, setHasSeenWhySection] = useState(false);
+  const [hasSeenStatsSection, setHasSeenStatsSection] = useState(false);
+  const [clientCount, setClientCount] = useState(0);
 
   const bioImage = '/assets/coach_marie_final.jpg';
   const journeyImage = '/assets/journey_image.jpg';
@@ -39,6 +42,62 @@ function App() {
     }, 5000);
     return () => clearInterval(interval);
   }, [mobileGalleryImages.length]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          if (entry.target.classList.contains('why-section')) {
+            setHasSeenWhySection(true);
+          }
+
+          if (entry.target.classList.contains('stats-section')) {
+            setHasSeenStatsSection(true);
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    const whySection = document.querySelector('.why-section');
+    const statsSections = document.querySelectorAll('.stats-section');
+
+    if (whySection) {
+      observer.observe(whySection);
+    }
+
+    statsSections.forEach((statsSection) => observer.observe(statsSection));
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasSeenStatsSection) {
+      return;
+    }
+
+    let frameId = 0;
+    const duration = 1400;
+    const startedAt = performance.now();
+
+    const animateCount = (now: number) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      setClientCount(Math.round(easedProgress * 100));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(animateCount);
+      }
+    };
+
+    frameId = requestAnimationFrame(animateCount);
+
+    return () => cancelAnimationFrame(frameId);
+  }, [hasSeenStatsSection]);
 
   const approaches = [
     {
@@ -211,7 +270,7 @@ function App() {
           <h2 className="why-title">Real training, real results</h2>
           <p>Our commitment to authenticity sets Build to Burn apart. Instead of quick-fixes or fitness influencer hype, we align your goals with personalized coaching for sustainable results.</p>
         </div>
-        <div className="why-grid">
+        <div className={`why-grid ${hasSeenWhySection ? 'is-visible' : ''}`}>
           <div className="why-item">
             <div className="why-line"></div>
             <h3>Clear progress</h3>
@@ -219,7 +278,7 @@ function App() {
           </div>
           <div className="why-item">
             <div className="why-line"></div>
-            <h3>Realistic life balance</h3>
+            <h3>Real life balance</h3>
             <p>Fitness should enhance your life, not take it over. Workouts are designed to integrate seamlessly into your busy routines.</p>
           </div>
           <div className="why-item">
@@ -235,7 +294,7 @@ function App() {
           <h2 className="stats-title mobile-section-title">By the numbers</h2>
           <div className="mobile-stats-grid">
             <div className="stat-box">
-              <div className="stat-number">100+</div>
+              <div className="stat-number stat-number-animated">{clientCount}+</div>
               <div className="stat-label">Client Transformations</div>
             </div>
             <div className="stat-box">
@@ -367,7 +426,7 @@ function App() {
             <h2 className="stats-title" style={{ maxWidth: '500px' }}>Build to Burn has empowered hundreds of women</h2>
           </div>
           <div className="stat-box stats-desktop-only">
-            <div className="stat-number">100+</div>
+            <div className="stat-number stat-number-animated">{clientCount}+</div>
             <div className="stat-label">Client Transformations</div>
           </div>
           <div className="stat-box stats-desktop-only">
