@@ -513,7 +513,7 @@ function App() {
             <a href="#consultation" className="btn btn-outline">Select Plan</a>
           </div>
 
-          <div className="pricing-card" style={{ border: '2px solid var(--color-text)', boxShadow: '0 10px 30px rgba(58,52,48,0.12)' }}>
+          <div className="pricing-card pricing-card-featured">
             <h3 className="pricing-title">Personal Training</h3>
             <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1rem', color: 'var(--color-text)' }}>
               <span>Package</span>
