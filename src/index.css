@@ -159,12 +159,15 @@ nav {
 }
 
 .nav-brand {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.nav-logo {
+  display: block;
+  width: clamp(96px, 10vw, 140px);
+  height: auto;
 }
 
 .nav-links {
@@ -526,7 +529,7 @@ nav {
 .why-item {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
+  transition: opacity 1.15s ease, transform 1.15s ease;
 }
 
 .why-grid.is-visible .why-item {
@@ -535,11 +538,11 @@ nav {
 }
 
 .why-grid.is-visible .why-item:nth-child(2) {
-  transition-delay: 0.14s;
+  transition-delay: 0.2s;
 }
 
 .why-grid.is-visible .why-item:nth-child(3) {
-  transition-delay: 0.28s;
+  transition-delay: 0.4s;
 }
 
 .why-item h3 {
@@ -832,9 +835,23 @@ nav {
 /* Form Section */
 .form-section {
   padding: 5rem 5%;
-  max-width: 800px;
-  margin: 0 auto;
+  background-color: var(--color-text);
+  color: #fff;
   text-align: center;
+}
+
+.form-section > * {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-section .help-title {
+  color: #fff;
+}
+
+.form-section p {
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .form-group {
@@ -853,12 +870,24 @@ nav {
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--color-text);
+  border-color: var(--color-accent);
 }
 
 .form-group button:disabled {
   opacity: 0.7;
   cursor: wait;
+}
+
+.form-section .form-group .btn {
+  background-color: #fff;
+  color: var(--color-text);
+  border-color: #fff;
+}
+
+.form-section .form-group .btn:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
 }
 
 .form-message {
@@ -876,10 +905,17 @@ nav {
 
 /* Footer */
 footer {
-  background-color: var(--color-text);
-  color: #fff;
+  background-color: #fff;
+  color: var(--color-text);
   padding: 3rem 5%;
   text-align: center;
+}
+
+.footer-logo {
+  display: block;
+  width: min(240px, 72vw);
+  height: auto;
+  margin: 0 auto 1rem;
 }
 
 /* Reviews & Testimonial Styling */
@@ -1130,8 +1166,8 @@ footer {
     padding: 1rem 5%;
   }
 
-  .nav-brand {
-    font-size: 1.5rem;
+  .nav-logo {
+    width: clamp(88px, 24vw, 112px);
   }
 
   .nav-actions {
@@ -1157,16 +1193,17 @@ footer {
 
   .mobile-stats-numbers {
     display: block;
+    padding-top: 1.25rem;
   }
 
   .mobile-stats-panel {
-    padding-top: 0;
-    padding-bottom: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 1.75rem;
   }
 
   .mobile-gallery-section {
     display: block;
-    padding: 1rem 5% 1rem;
+    padding: 1.5rem 5% 1rem;
   }
 
   .mobile-gallery-shell {
@@ -1175,7 +1212,7 @@ footer {
 
   .reviews-mobile-title {
     display: block;
-    padding: 0.75rem 0 1rem;
+    padding: 1rem 0;
   }
 }
 

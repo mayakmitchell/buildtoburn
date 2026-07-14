@@ -201,7 +201,9 @@ function App() {
       </div>
 
       <nav>
-        <div className="nav-brand">BUILD TO BURN</div>
+        <a href="#" className="nav-brand" aria-label="Build to Burn home">
+          <img src="/assets/build-to-burn-logo.jpg" alt="Build to Burn" className="nav-logo" />
+        </a>
         <div className="nav-links">
           <a href="#philosophy">Philosophy</a>
           <a href="#approach">Approach</a>
@@ -436,7 +438,7 @@ function App() {
         </div>
 
         <div className="reviews-mobile-title">
-          <h2 className="stats-title mobile-section-title">Ratings & reviews</h2>
+          <h2 className="stats-title mobile-section-title">Ratings & Reviews</h2>
         </div>
 
         <div className="reviews-container">
@@ -584,9 +586,7 @@ function App() {
 
       {/* Footer */}
       <footer>
-        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', letterSpacing: '2px', marginBottom: '1rem' }}>
-          BUILD TO BURN
-        </div>
+        <img src="/assets/build-to-burn-logo.jpg" alt="Build to Burn" className="footer-logo" />
         <p style={{ color: '#888', fontSize: '0.9rem' }}>San Diego, CA</p>
         <p style={{ color: '#888', fontSize: '0.8rem', marginTop: '2rem' }}>
           &copy; {new Date().getFullYear()} Build to Burn. All rights reserved.
