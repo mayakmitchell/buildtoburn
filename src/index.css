@@ -1087,6 +1087,8 @@ footer {
 
   .stats-grid {
     text-align: center;
+    display: none;
+    margin-bottom: 0;
   }
 
   .stats-grid > div:first-child {
@@ -1113,6 +1115,18 @@ footer {
 
   .why-header {
     margin-bottom: 1.5rem;
+  }
+
+  .why-item {
+    transition: opacity 1.35s ease, transform 1.35s ease;
+  }
+
+  .why-grid.is-visible .why-item:nth-child(2) {
+    transition-delay: 0.32s;
+  }
+
+  .why-grid.is-visible .why-item:nth-child(3) {
+    transition-delay: 0.64s;
   }
 
   /* Collapse the large margin on help-section to eliminate whitespace gap */
@@ -1198,12 +1212,12 @@ footer {
 
   .mobile-stats-panel {
     padding-top: 0.75rem;
-    padding-bottom: 1.75rem;
+    padding-bottom: 2.25rem;
   }
 
   .mobile-gallery-section {
     display: block;
-    padding: 1.5rem 5% 1rem;
+    padding: 2.25rem 5% 1rem;
   }
 
   .mobile-gallery-shell {
@@ -1212,7 +1226,15 @@ footer {
 
   .reviews-mobile-title {
     display: block;
-    padding: 1rem 0;
+    padding: 2rem 0;
+  }
+
+  .stats-section:not(.mobile-stats-panel) {
+    padding-top: 2rem;
+  }
+
+  .stats-section:not(.mobile-stats-panel) .reviews-container {
+    padding-top: 1.25rem;
   }
 }
 
