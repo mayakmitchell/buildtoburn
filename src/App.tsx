@@ -13,14 +13,19 @@ function App() {
   const [hasSeenWhySection, setHasSeenWhySection] = useState(false);
   const [hasSeenStatsSection, setHasSeenStatsSection] = useState(false);
   const [clientCount, setClientCount] = useState(0);
+  const [isDesktopHero, setIsDesktopHero] = useState(() => window.innerWidth > 900);
 
   const bioImage = '/assets/coach_marie_final.jpg';
   const journeyImage = '/assets/journey_image.jpg';
   
   const hero_2 = '/assets/media__1776044929075.jpg';
   const hero_4 = '/assets/media__1776044929674.jpg';
+  const marieMedals = '/assets/hero-marie-medals.jpg';
+  const marieMedalsDesktop = '/assets/hero-marie-medals-desktop.png';
+  const marieDeadlift = '/assets/hero-marie-deadlift.jpg';
+  const marieSquat = '/assets/hero-marie-squat.jpg';
 
-  const carouselImages = [hero_2, hero_4, journeyImage];
+  const carouselImages = [hero_2, isDesktopHero ? marieMedalsDesktop : marieMedals, hero_4, journeyImage, marieDeadlift, marieSquat];
   const mobileGalleryImages = [
     '/assets/mobile-gallery-1.jpg',
     '/assets/mobile-gallery-2.jpg',
@@ -28,6 +33,15 @@ function App() {
     '/assets/mobile-gallery-4.jpg',
     '/assets/mobile-gallery-5.jpg',
   ];
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 901px)');
+    const updateHeroImageMode = () => setIsDesktopHero(mediaQuery.matches);
+
+    updateHeroImageMode();
+    mediaQuery.addEventListener('change', updateHeroImageMode);
+    return () => mediaQuery.removeEventListener('change', updateHeroImageMode);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
