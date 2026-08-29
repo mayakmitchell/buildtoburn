@@ -1,6 +1,8 @@
 import { useState, useEffect, type FormEvent } from 'react';
 
-const SIGNUP_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzTX37vFmW-F2gowNrwW8Z8AKrj1HGbzcyIy_KgIC_rpXXz0v4IFOtD5G5EWjojoPZk/exec';
+type SignupStatus = 'idle' | 'submitting' | 'success' | 'duplicate' | 'error';
+
+type CoachingInterest = 'personal-training' | 'group-training' | 'online-coaching' | 'not-sure';
 
 function App() {
   const [activeApproach, setActiveApproach] = useState(0);
@@ -9,7 +11,13 @@ function App() {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [signupEmail, setSignupEmail] = useState('');
-  const [signupStatus, setSignupStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [signupFirstName, setSignupFirstName] = useState('');
+  const [signupPhone, setSignupPhone] = useState('');
+  const [signupCoachingInterest, setSignupCoachingInterest] = useState<CoachingInterest | ''>('');
+  const [signupGoals, setSignupGoals] = useState('');
+  const [signupWebsite, setSignupWebsite] = useState('');
+  const [signupStatus, setSignupStatus] = useState<SignupStatus>('idle');
+  const [signupStartedAt] = useState(() => Date.now());
   const [hasSeenWhySection, setHasSeenWhySection] = useState(false);
   const [hasSeenStatsSection, setHasSeenStatsSection] = useState(false);
   const [clientCount, setClientCount] = useState(0);
@@ -186,22 +194,55 @@ function App() {
     setCurrentTestimonialIndex((prev) => Math.max(0, prev - 2));
   };
 
+  const resetSignupForm = () => {
+    setSignupFirstName('');
+    setSignupEmail('');
+    setSignupPhone('');
+    setSignupCoachingInterest('');
+    setSignupGoals('');
+  };
+
   const handleSignupSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const email = signupEmail.trim().toLowerCase();
+
+    if (!event.currentTarget.reportValidity()) {
+      return;
+    }
+
     setSignupStatus('submitting');
 
     try {
-      await fetch(SIGNUP_WEB_APP_URL, {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
-        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          email: signupEmail,
+          firstName: signupFirstName.trim(),
+          email,
+          phone: signupPhone.trim(),
+          coachingInterest: signupCoachingInterest,
+          goals: signupGoals.trim(),
+          website: signupWebsite,
+          formStartedAt: signupStartedAt,
           source: 'buildtoburn.com',
-          submittedAt: new Date().toISOString(),
         }),
       });
 
-      setSignupEmail('');
+      const result = await response.json().catch(() => null) as { status?: string } | null;
+
+      if (response.status === 409 || result?.status === 'duplicate') {
+        resetSignupForm();
+        setSignupStatus('duplicate');
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error('Signup request failed');
+      }
+
+      resetSignupForm();
       setSignupStatus('success');
     } catch {
       setSignupStatus('error');
@@ -567,35 +608,130 @@ function App() {
       {/* Form Section */}
       <section id="consultation" className="form-section">
         <h2 className="help-title" style={{ marginBottom: '1rem' }}>Ready to get started?</h2>
-        <p>If you're ready to train smarter, feel stronger, and build confidence that carries into every part of your life, Build to Burn is here to support you.</p>
-        <form className="form-group" onSubmit={handleSignupSubmit}>
-          <input
-            type="email"
-            placeholder="Enter your email address"
-            value={signupEmail}
-            onChange={(event) => {
-              setSignupEmail(event.target.value);
-              if (signupStatus !== 'idle') {
-                setSignupStatus('idle');
-              }
-            }}
-            required
-          />
+        <p>If you're ready to train smarter, feel stronger, and build confidence that carries into every part of your life, tell Marie a little about what you're looking for.</p>
+        <form
+          className="form-group"
+          onSubmit={handleSignupSubmit}
+          onChange={() => {
+            if (signupStatus !== 'idle') {
+              setSignupStatus('idle');
+            }
+          }}
+        >
+          <div className="form-row">
+            <div className="form-field">
+              <label htmlFor="signup-first-name">First name <span aria-hidden="true">*</span></label>
+              <input
+                id="signup-first-name"
+                name="firstName"
+                type="text"
+                value={signupFirstName}
+                onChange={(event) => setSignupFirstName(event.target.value)}
+                autoComplete="given-name"
+                maxLength={80}
+                required
+              />
+            </div>
+            <div className="form-field">
+              <label htmlFor="signup-email">Email address <span aria-hidden="true">*</span></label>
+              <input
+                id="signup-email"
+                name="email"
+                type="email"
+                value={signupEmail}
+                onChange={(event) => setSignupEmail(event.target.value)}
+                autoComplete="email"
+                inputMode="email"
+                maxLength={254}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="signup-phone">Phone number <span className="field-optional">Optional</span></label>
+            <input
+              id="signup-phone"
+              name="phone"
+              type="tel"
+              value={signupPhone}
+              onChange={(event) => setSignupPhone(event.target.value)}
+              autoComplete="tel"
+              inputMode="tel"
+              maxLength={30}
+            />
+          </div>
+
+          <fieldset className="form-field coaching-options">
+            <legend>What type of coaching are you interested in? <span aria-hidden="true">*</span></legend>
+            <div className="coaching-options-grid">
+              {[
+                ['personal-training', 'Personal Training'],
+                ['group-training', 'Group Training'],
+                ['online-coaching', 'Online Coaching'],
+                ['not-sure', "I'm not sure yet"],
+              ].map(([value, label]) => (
+                <label className="coaching-option" key={value}>
+                  <input
+                    type="radio"
+                    name="coachingInterest"
+                    value={value}
+                    checked={signupCoachingInterest === value}
+                    onChange={() => setSignupCoachingInterest(value as CoachingInterest)}
+                    required
+                  />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="form-field">
+            <label htmlFor="signup-goals">What would you like help with? <span className="field-optional">Optional</span></label>
+            <textarea
+              id="signup-goals"
+              name="goals"
+              placeholder="Briefly tell Marie about your goals, experience, or anything she should know."
+              value={signupGoals}
+              onChange={(event) => setSignupGoals(event.target.value)}
+              maxLength={1000}
+              rows={4}
+            />
+          </div>
+
+          <div className="form-honeypot" aria-hidden="true">
+            <label htmlFor="signup-website">Website</label>
+            <input
+              id="signup-website"
+              name="website"
+              type="text"
+              value={signupWebsite}
+              onChange={(event) => setSignupWebsite(event.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           <button
             type="submit"
-            className="btn"
-            style={{ minWidth: '200px' }}
+            className="btn form-submit"
             disabled={signupStatus === 'submitting'}
           >
-            {signupStatus === 'submitting' ? 'Submitting...' : 'Submit Request'}
+            {signupStatus === 'submitting' ? 'Sending...' : 'Request a Free Consultation'}
           </button>
+          <p className="form-privacy">By submitting, you agree that Marie may contact you about your consultation request.</p>
         </form>
-        {signupStatus === 'success' && (
-          <p className="form-message success">Thank you. We will be in touch soon.</p>
-        )}
-        {signupStatus === 'error' && (
-          <p className="form-message error">Something went wrong. Please try again.</p>
-        )}
+        <div id="signup-message" className="form-message" aria-live="polite" aria-atomic="true">
+          {signupStatus === 'success' && (
+            <p className="success">Thanks! Your consultation request has been sent. Check your inbox for a confirmation from Marie.</p>
+          )}
+          {signupStatus === 'duplicate' && (
+            <p className="success">Marie already has a request from this email address and will follow up soon.</p>
+          )}
+          {signupStatus === 'error' && (
+            <p className="error">We couldn't add you right now. Please try again in a moment.</p>
+          )}
+        </div>
       </section>
 
       {/* Footer */}
