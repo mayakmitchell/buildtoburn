@@ -879,7 +879,7 @@ nav {
 .form-field legend {
   color: #fff;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .field-optional {
@@ -907,11 +907,16 @@ nav {
   min-height: 120px;
 }
 
-.form-group input:focus,
+.form-group input:not([type='radio']):focus,
 .form-group textarea:focus {
   outline: none;
   border-color: var(--color-accent);
   box-shadow: 0 0 0 3px rgba(232, 93, 31, 0.28);
+}
+
+.coaching-option input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .coaching-options {
