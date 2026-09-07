@@ -26,20 +26,20 @@ function App() {
   const bioImage = '/assets/coach_marie_final.jpg';
   const journeyImage = '/assets/journey_image.jpg';
   
-  const hero_2 = '/assets/media__1776044929075.jpg';
   const hero_4 = '/assets/media__1776044929674.jpg';
   const marieMedals = '/assets/hero-marie-medals.jpg';
   const marieMedalsDesktop = '/assets/hero-marie-medals-desktop.png';
   const marieDeadlift = '/assets/hero-marie-deadlift.jpg';
   const marieSquat = '/assets/hero-marie-squat.jpg';
+  const marieKettlebell = '/assets/hero-marie-kettlebell.jpg';
 
-  const carouselImages = [hero_2, isDesktopHero ? marieMedalsDesktop : marieMedals, hero_4, journeyImage, marieDeadlift, marieSquat];
+  const carouselImages = [isDesktopHero ? marieMedalsDesktop : marieMedals, hero_4, journeyImage, marieDeadlift, marieSquat, marieKettlebell];
   const mobileGalleryImages = [
     '/assets/mobile-gallery-1.jpg',
-    '/assets/mobile-gallery-2.jpg',
     '/assets/mobile-gallery-3.jpg',
     '/assets/mobile-gallery-4.jpg',
     '/assets/mobile-gallery-5.jpg',
+    '/assets/journey-marie-client.jpg',
   ];
 
   useEffect(() => {
@@ -300,7 +300,7 @@ function App() {
               key={img}
               src={img}
               alt={`Build to Burn Hero ${index + 1}`}
-              className={`carousel-img ${index === currentImageIndex ? 'active' : ''}`}
+              className={`carousel-img ${img === marieDeadlift ? 'carousel-img-deadlift' : ''} ${img === marieSquat ? 'carousel-img-powerlift' : ''} ${img === marieKettlebell ? 'carousel-img-kettlebell' : ''} ${index === currentImageIndex ? 'active' : ''}`}
             />
           ))}
         </div>
@@ -323,25 +323,31 @@ function App() {
 
       {/* Philosophy Section */}
       <section id="philosophy" className="why-section">
-        <div className="why-header">
-          <h2 className="why-title">Real training, real results</h2>
-          <p>Our commitment to authenticity sets Build to Burn apart. Instead of quick-fixes or fitness influencer hype, we align your goals with personalized coaching for sustainable results.</p>
-        </div>
-        <div className={`why-grid ${hasSeenWhySection ? 'is-visible' : ''}`}>
-          <div className="why-item">
-            <div className="why-line"></div>
-            <h3>Clear progress</h3>
-            <p>Achieve long-term results through progressive overload and structured support, guiding you every step along the way.</p>
+        <svg className="why-flame" viewBox="0 0 300 500" aria-hidden="true" focusable="false">
+          <path d="M177 10c11 76-51 106-30 166 14 41 67 54 74 116 9 77-43 151-128 184 48-49 58-101 26-145-27-37-43-78-25-121 15-36 49-59 58-94 8-31 4-73 25-106Z" />
+          <path className="why-flame-inner" d="M160 202c21 45-13 70 6 105 14 26 40 43 31 80-9 38-42 64-79 77 23-29 25-61 4-86-21-25-23-55-8-80 14-24 41-49 46-96Z" />
+        </svg>
+        <div className="why-content">
+          <div className="why-header">
+            <h2 className="why-title">Real training, real results</h2>
+            <p>Our commitment to authenticity sets Build to Burn apart. Instead of quick-fixes or fitness influencer hype, we align your goals with personalized coaching for sustainable results.</p>
           </div>
-          <div className="why-item">
-            <div className="why-line"></div>
-            <h3>Real life balance</h3>
-            <p>Fitness should enhance your life, not take it over. Workouts are designed to integrate seamlessly into your busy routines.</p>
-          </div>
-          <div className="why-item">
-            <div className="why-line"></div>
-            <h3>Empower the mind and body</h3>
-            <p>We are dedicated to helping women feel strong, both physically and mentally.</p>
+          <div className={`why-grid ${hasSeenWhySection ? 'is-visible' : ''}`}>
+            <div className="why-item">
+              <div className="why-line"></div>
+              <h3>Clear progress</h3>
+              <p>Achieve long-term results through progressive overload and structured support, guiding you every step along the way.</p>
+            </div>
+            <div className="why-item">
+              <div className="why-line"></div>
+              <h3>Real life balance</h3>
+              <p>Fitness should enhance your life, not take it over. Workouts are designed to integrate seamlessly into your busy routines.</p>
+            </div>
+            <div className="why-item">
+              <div className="why-line"></div>
+              <h3>Empower the mind and body</h3>
+              <p>We are dedicated to helping women feel strong, both physically and mentally.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -620,14 +626,14 @@ function App() {
         >
           <div className="form-row">
             <div className="form-field">
-              <label htmlFor="signup-first-name">First name <span aria-hidden="true">*</span></label>
+              <label htmlFor="signup-first-name">Name <span aria-hidden="true">*</span></label>
               <input
                 id="signup-first-name"
                 name="firstName"
                 type="text"
                 value={signupFirstName}
                 onChange={(event) => setSignupFirstName(event.target.value)}
-                autoComplete="given-name"
+                autoComplete="name"
                 maxLength={80}
                 required
               />

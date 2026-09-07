@@ -1,6 +1,5 @@
 const LEADS_SHEET_NAME = 'Leads';
 const HEADERS = [
-  'Lead ID',
   'Submitted At',
   'Last Submitted At',
   'First Name',
@@ -19,6 +18,7 @@ const HEADERS = [
   'Last Contacted At',
   'Consultation Date',
   'Internal Notes',
+  'Lead ID',
 ];
 
 const INTEREST_LABELS = {
@@ -50,15 +50,14 @@ function doPost(event) {
       const existingRow = findLeadRow_(sheet, lead.email);
 
       if (existingRow) {
-        sheet.getRange(existingRow, 3).setValue(new Date());
-        const countCell = sheet.getRange(existingRow, 16);
+        sheet.getRange(existingRow, columnNumber_('Last Submitted At')).setValue(new Date());
+        const countCell = sheet.getRange(existingRow, columnNumber_('Submission Count'));
         countCell.setValue((Number(countCell.getValue()) || 1) + 1);
         return jsonResponse_({ status: 'duplicate' });
       }
 
       const now = new Date();
       const row = [
-        Utilities.getUuid(),
         now,
         now,
         lead.firstName,
@@ -77,13 +76,14 @@ function doPost(event) {
         '',
         '',
         '',
+        Utilities.getUuid(),
       ];
 
       sheet.appendRow(row);
       const rowNumber = sheet.getLastRow();
       const delivery = sendLeadEmails_(lead, sheet.getParent().getUrl(), properties);
 
-      sheet.getRange(rowNumber, 12, 1, 4).setValues([[
+      sheet.getRange(rowNumber, columnNumber_('Auto Reply Status'), 1, 4).setValues([[
         delivery.autoReplySent ? 'Sent' : 'Failed',
         delivery.autoReplySent ? new Date() : '',
         delivery.notificationSent ? 'Sent' : 'Failed',
@@ -144,12 +144,20 @@ function findLeadRow_(sheet, normalizedEmail) {
   }
 
   const match = sheet
-    .getRange(2, 6, sheet.getLastRow() - 1, 1)
+    .getRange(2, columnNumber_('Normalized Email'), sheet.getLastRow() - 1, 1)
     .createTextFinder(normalizedEmail)
     .matchEntireCell(true)
     .findNext();
 
   return match ? match.getRow() : null;
+}
+
+function columnNumber_(header) {
+  const index = HEADERS.indexOf(header);
+  if (index === -1) {
+    throw new Error('Unknown lead sheet header: ' + header);
+  }
+  return index + 1;
 }
 
 function normalizeLead_(payload) {
