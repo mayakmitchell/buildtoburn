@@ -1277,8 +1277,9 @@ footer {
 
   .hero-left {
     height: 100%;
-    justify-content: flex-start;
-    padding: 2.75rem 5% 2rem;
+    justify-content: center;
+    padding: 2rem 5%;
+    transform: translateY(-2.75rem);
   }
 
   .hero-right,
@@ -1490,7 +1491,7 @@ footer {
 @media (max-width: 600px) {
   .hero-title {
     font-size: clamp(2.35rem, 11vw, 2.75rem);
-    line-height: 1.04;
+    line-height: 1.12;
     font-weight: 700;
   }
 
