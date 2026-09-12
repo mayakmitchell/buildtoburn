@@ -1250,9 +1250,17 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .above-fold {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 620px;
+  }
+
   .hero-split {
-    height: calc(100svh - 144px);
-    min-height: 500px;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
     max-height: none;
   }
 
@@ -1277,8 +1285,20 @@ footer {
 
   .hero-left {
     height: 100%;
-    justify-content: flex-start;
-    padding: 2.75rem 5% 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 5%;
+    text-align: center;
+    transform: translateY(-2.75rem);
+  }
+
+  .hero-left p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-btn-wrapper {
+    text-align: center;
   }
 
   .hero-right,
@@ -1489,8 +1509,8 @@ footer {
 
 @media (max-width: 600px) {
   .hero-title {
-    font-size: clamp(2.35rem, 11vw, 2.75rem);
-    line-height: 1.04;
+    font-size: clamp(2.55rem, 11.5vw, 2.95rem);
+    line-height: 1.12;
     font-weight: 700;
   }
 

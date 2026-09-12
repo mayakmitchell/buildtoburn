@@ -250,11 +250,12 @@ function App() {
 
   return (
     <>
-      <div className="topbar">
-        AUTHENTIC, PERSONALIZED STRENGTH TRAINING. FIRST CONSULTATION IS FREE.
-      </div>
+      <div className="above-fold">
+        <div className="topbar">
+          AUTHENTIC, PERSONALIZED STRENGTH TRAINING. FIRST CONSULTATION IS FREE.
+        </div>
 
-      <nav>
+        <nav>
         <a href="#" className="nav-brand" aria-label="Build to Burn home">
           <img src="/assets/build-to-burn-logo.jpg" alt="Build to Burn" className="nav-logo" />
         </a>
@@ -289,10 +290,10 @@ function App() {
             <span></span>
           </button>
         </div>
-      </nav>
+        </nav>
 
-      {/* Hero Section */}
-      <section className="hero-split">
+        {/* Hero Section */}
+        <section className="hero-split">
         <div className="hero-right">
           {carouselImages.map((img, index) => (
             <img
@@ -318,7 +319,8 @@ function App() {
             <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.82)', marginTop: '0.5rem' }}>No commitment required.</div>
           </div>
         </div>
-      </section>
+        </section>
+      </div>
 
       {/* Philosophy Section */}
       <section id="philosophy" className="why-section">
