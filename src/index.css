@@ -1245,6 +1245,10 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .carousel-img-kettlebell {
+    transform: scale(1.08) translate(0, 1.5%);
+  }
+
   .help-section,
   .journey-section,
   .bio-section {
