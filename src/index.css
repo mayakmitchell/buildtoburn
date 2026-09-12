@@ -234,7 +234,12 @@ nav {
   font-weight: 700;
 }
 
-.hero-title span {
+.hero-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero-title-accent {
   color: #e28a5f;
 }
 
@@ -1245,6 +1250,12 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .hero-split {
+    height: calc(100svh - 144px);
+    min-height: 500px;
+    max-height: none;
+  }
+
   .carousel-img-kettlebell {
     object-position: 42% bottom;
     transform-origin: center bottom;
@@ -1262,6 +1273,12 @@ footer {
   .journey-right,
   .bio-right {
     padding: 4rem 5%;
+  }
+
+  .hero-left {
+    height: 100%;
+    justify-content: flex-start;
+    padding: 2.75rem 5% 2rem;
   }
 
   .hero-right,
@@ -1471,10 +1488,9 @@ footer {
 }
 
 @media (max-width: 600px) {
-  /* Hero title — bolder, larger on mobile for visual impact */
   .hero-title {
-    font-size: 3.1rem;
-    line-height: 1.02;
+    font-size: clamp(2.35rem, 11vw, 2.75rem);
+    line-height: 1.04;
     font-weight: 700;
   }
 

@@ -305,9 +305,9 @@ function App() {
         </div>
         <div className="hero-left">
           <h1 className="hero-title">
-            Build strength,<br />
-            Build confidence,<br />
-            <span>Build to Burn</span>
+            <span className="hero-title-line">Build strength,</span>
+            <span className="hero-title-line">Build confidence,</span>
+            <span className="hero-title-line hero-title-accent">Build to Burn</span>
           </h1>
           <p>
             Personalized strength training for real life, not extremes.
