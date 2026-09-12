@@ -1246,7 +1246,9 @@ footer {
 
 @media (max-width: 900px) {
   .carousel-img-kettlebell {
-    transform: scale(1.08) translate(0, 1.5%);
+    object-position: 42% bottom;
+    transform-origin: center bottom;
+    transform: scale(1.16) translateX(5%);
   }
 
   .help-section,
