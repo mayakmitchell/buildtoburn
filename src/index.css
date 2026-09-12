@@ -306,10 +306,6 @@ nav {
   opacity: 1;
 }
 
-.carousel-img-deadlift {
-  object-position: center top;
-}
-
 .carousel-img-powerlift {
   object-position: center top;
   transform: scale(1.03) translateY(-1%);

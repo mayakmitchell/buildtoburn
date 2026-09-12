@@ -29,11 +29,10 @@ function App() {
   const hero_4 = '/assets/media__1776044929674.jpg';
   const marieMedals = '/assets/hero-marie-medals.jpg';
   const marieMedalsDesktop = '/assets/hero-marie-medals-desktop.png';
-  const marieDeadlift = '/assets/hero-marie-deadlift.jpg';
   const marieSquat = '/assets/hero-marie-squat.jpg';
   const marieKettlebell = '/assets/hero-marie-kettlebell.jpg';
 
-  const carouselImages = [isDesktopHero ? marieMedalsDesktop : marieMedals, hero_4, journeyImage, marieDeadlift, marieSquat, marieKettlebell];
+  const carouselImages = [isDesktopHero ? marieMedalsDesktop : marieMedals, hero_4, journeyImage, marieSquat, marieKettlebell];
   const mobileGalleryImages = [
     '/assets/mobile-gallery-1.jpg',
     '/assets/mobile-gallery-3.jpg',
@@ -300,7 +299,7 @@ function App() {
               key={img}
               src={img}
               alt={`Build to Burn Hero ${index + 1}`}
-              className={`carousel-img ${img === marieDeadlift ? 'carousel-img-deadlift' : ''} ${img === marieSquat ? 'carousel-img-powerlift' : ''} ${img === marieKettlebell ? 'carousel-img-kettlebell' : ''} ${index === currentImageIndex ? 'active' : ''}`}
+              className={`carousel-img ${img === marieSquat ? 'carousel-img-powerlift' : ''} ${img === marieKettlebell ? 'carousel-img-kettlebell' : ''} ${index === currentImageIndex ? 'active' : ''}`}
             />
           ))}
         </div>
